@@ -19,11 +19,11 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="finance"
+        name="crypto"
         options={{
-          title: "Finance",
+          title: "Crypto",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="money" color={color} />
+            <FontAwesome size={28} name="bitcoin" color={color} />
           ),
         }}
       />
