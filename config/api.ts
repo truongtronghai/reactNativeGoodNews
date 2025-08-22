@@ -9,20 +9,20 @@ const newsdata = {
   },
   country: [],
   language: ["en", "vi"],
-  getLatestNews: function () {
-    return `${this.baseUrl}${this.endpoints.latest}?apikey=${
-      this.apiKey
-    }&language=${this.language.join(",")}`;
+  getLatestNews: function (id: string | null = null) {
+    return `${this.baseUrl}${this.endpoints.latest}?apikey=${this.apiKey}${
+      id ? `&id=${id}` : `&language=${this.language.join(",")}`
+    }`;
   },
   getArchives: function () {
     return `${this.baseUrl}${this.endpoints.archives}?apikey=${
       this.apiKey
     }&language=${this.language.join(",")}`;
   },
-  getCryptoNews: function () {
+  getCryptoNews: function (id: string | null = null) {
     return `${this.baseUrl}${this.endpoints.crypto}?apikey=${
       this.apiKey
-    }&language=${this.language.join(",")}`;
+    }&language=${this.language.join(",")} `;
   },
   getSources: function () {
     return `${this.baseUrl}${this.endpoints.sources}?apikey=${

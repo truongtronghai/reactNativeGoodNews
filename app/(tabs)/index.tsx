@@ -1,41 +1,52 @@
-import newsdata from "@/config/api";
+import newsdata, { NewsAPIItem } from "@/config/thenewsapi";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
+import { Link } from "expo-router";
 
 export default function Index() {
-  const [latestNews, setLatestNews] = useState([]);
+  const [allNews, setAllNews] = useState<NewsAPIItem[]>([]);
 
   useEffect(() => {
-    const fetchLatestNews = async () => {
+    const fetchAllNews = async () => {
       try {
-        const response = await axios.get(newsdata.getLatestNews());
-        if (response.data.status === "success")
-          setLatestNews(response.data.results);
+        const response = await axios.get(newsdata.getAllNews());
+        setAllNews(response.data.data);
       } catch (error) {
-        console.error("Error fetching latest news:", error);
+        console.error("Error fetching all news:", error);
       }
     };
 
-    fetchLatestNews();
+    fetchAllNews();
   }, []);
 
   return (
     <FlatList
-      data={latestNews}
+      data={allNews}
       style={styles.container}
       renderItem={({ item }: { item: any }) => (
         <View style={styles.item}>
           <Image source={{ uri: item.image_url }} style={styles.image} />
-          <Text style={styles.title}>{item.title}</Text>
+          <Link href={`/article/${item.uuid}`} asChild>
+            <Pressable>
+              <Text style={styles.title}>{item.title}</Text>
+            </Pressable>
+          </Link>
           <Text style={styles.description}>{item.description}</Text>
           <View style={styles.sourceContainer}>
             <Text style={styles.sourceLabel}>Source:</Text>
-            <Text style={styles.source}>{item.source_name}</Text>
+            <Text style={styles.source}>{item.source}</Text>
           </View>
         </View>
       )}
-      keyExtractor={(item) => item.article_id}
+      keyExtractor={(item) => item.uuid}
     />
   );
 }
