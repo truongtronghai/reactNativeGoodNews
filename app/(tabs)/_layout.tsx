@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 export default function TabsLayout() {
   return (
     <Tabs
+      initialRouteName="index" // Set the initial route to the "index" screen, overriding the default order of children
       screenOptions={{
         tabBarActiveTintColor: "#e91e63",
         tabBarShowLabel: true,
